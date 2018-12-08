@@ -104,11 +104,8 @@ int main(int argc, char* argv[]){
         return 0;
     }
     char* hostfile = "sync.cfg";
-    int cPort = 13000;
-    if(argc > 1) cPort = atoi(argv[1]);
+    int cPort = atoi(argv[2]);
     int sPort = 9998;
-    if(argc > 2) sPort = atoi(argv[2]);
-    printf("Server Port: %d\nClient Port: %d\n", sPort, cPort);
 
     /**************** Camera Initialization *****************/ 
     /********************************************************/
@@ -142,8 +139,8 @@ int main(int argc, char* argv[]){
     for (int i = 0; i < numMCams; i++){
 
 	    printf("CameraId: %d\n", mcamList[i].mcamID);
-	    sprintf(fileName,"mcam_%d", mcamList[i].mcamID);
-	    sprintf(fileName,"mcam_config_%d", mcamList[i].mcamID);
+	    sprintf(fileName,"%s/mcam_%d", argv[1], mcamList[i].mcamID);
+	    sprintf(fileNameConfig,"%s/mcam_config_%d", argv[1], mcamList[i].mcamID);
 	    int fileId = getOutFileID(mcamList[i].mcamID);
 
         // if(fileId >= vOutFiles.size()) {
@@ -184,8 +181,9 @@ int main(int argc, char* argv[]){
 	    sleep(0.2);
     }
 
-    char a;
-    scanf("%c", &a);
+    //char a;
+    //scanf("%c", &a);
+    usleep(60e6);
 
     printf("start to stop streaming!\n");
 
@@ -209,6 +207,7 @@ int main(int argc, char* argv[]){
         AtlWhiteBalance wb = getMCamWhiteBalance(mcamList[i]);
 	    printf("CAM: %d after-- red: %f green: %f blue: %f\n",mcamList[i].mcamID, wb.red, wb.green, wb.blue);
     }
-    
-    printf("%d frames received\n", count);
+
+    printf("Save files finished!\n");
+    return 0;
 }
