@@ -11,27 +11,6 @@
 #include <vector>
 #include <mutex>
 
-int readFrameInfo(int argc, char* argv[]) {
-    char* frameInfoName = argv[1];
-
-    FILE* fp;
-    fp = fopen(frameInfoName, "rb");
-    FRAME_METADATA frameInfo;
-    int result;
-    int ind = 0;
-
-    do {
-        result = fread(&frameInfo, 1, sizeof(frameInfo), fp);
-        printf("%d\t%lu\t%lu\n", ind, frameInfo.m_type, frameInfo.m_timestamp);
-        ind ++;
-
-    } while(result == sizeof(frameInfo));
-
-    fclose(fp);
-
-    return 0;
-}
-
 int findIframePosition(std::string metafile) {
     FILE *fpmeta;
     // open meta file for read
@@ -121,7 +100,7 @@ int cutHEVCStream(std::string h264file, std::string h264file_out,
         result = fread(&frameInfo, 1, sizeof(frameInfo), fpmeta);
         if (result != sizeof(frameInfo))
             break;
-        printf("%d\t%lu\t%lu\n", ind, frameInfo.m_size, frameInfo.m_timestamp);
+        printf("%d\t%zu\t%llu\n", ind, frameInfo.m_size, frameInfo.m_timestamp);
 
         data = new char[frameInfo.m_size];
         if(!fread(data, 1, frameInfo.m_size, fph264)) {
@@ -137,7 +116,7 @@ int cutHEVCStream(std::string h264file, std::string h264file_out,
         if (hasIframe) {
             fwrite(data, frameInfo.m_size, 1, fph264_out);
             fwrite(&frameInfo, sizeof(frameInfo), 1, fpmeta_out);
-            fprintf(fpmeta_out_txt, "%d\t%lu\t%lu\n", valid_frame_num, frameInfo.m_size, frameInfo.m_timestamp);
+            fprintf(fpmeta_out_txt, "%d\t%zu\t%llu\n", valid_frame_num, frameInfo.m_size, frameInfo.m_timestamp);
             valid_frame_num++;
         }
         delete[] data;
