@@ -161,7 +161,7 @@ int extractSyncFrames(std::vector<std::vector<uint64_t>> timeStamps,
 }
 
 int main(int argc, char* argv[]) {
-    char* dir = "/Users/ShaneYuan/Downloads/data";
+    char* dir = argv[1];
     std::vector<std::vector<uint64_t>> timeStamps;
     std::vector<std::vector<int>> selectedFrameInds;
     readTimeStamps(dir, timeStamps);
