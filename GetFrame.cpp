@@ -109,6 +109,11 @@ int main(int argc, char* argv[]){
 
     int recordtime = atoi(argv[3]);
 
+    // make dir
+    char cmd[200];
+    sprintf(cmd, "mkdir %s", argv[1]);
+    system(cmd);
+
     /**************** Camera Initialization *****************/ 
     /********************************************************/
     /* start stream */
