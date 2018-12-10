@@ -1,2 +1,2 @@
-getFrame: getFrame.cpp
-	g++ -o getFrame.o getFrame.cpp -I. -lMantisAPI -std=c++11
+GetFrame: GetFrame.cpp
+	g++ -o GetFrame.o GetFrame.cpp -I. -lMantisAPI -std=c++11

@@ -61,13 +61,15 @@ project ( ${name} )
 # c++ version
 set (CMAKE_CXX_STANDARD 11)
 
-# # project to record h264 streams
-# add_executable(RecordStream
-#     getFrame.cpp
-# )
-# target_link_libraries(RecordStream
-#     /usr/local/MantisAPI.so
-# )
+# project to record h264 streams
+if (UNIX)
+    add_executable(RecordStream
+        GetFrame.cpp
+    )
+    target_link_libraries(RecordStream
+        /usr/local/lib/libMantisAPI.so
+    )
+endif (UNIX)
 
 # project to cut recorded h264 streams
 # find the first I frame and discard the previous P frames 
