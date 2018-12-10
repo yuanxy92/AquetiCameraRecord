@@ -160,11 +160,26 @@ int extractSyncFrames(std::vector<std::vector<uint64_t>> timeStamps,
     return 0;
 }
 
+int saveSyncFiles(char* syncfile, std::vector<std::vector<uint64_t>> timeStamps, 
+    std::vector<std::vector<int>> selectedFrameInds) {
+    FILE* fp = fopen(syncfile, "w");
+    for (int i = 0; i < selectedFrameInds.size(); i ++) {
+        fprintf(fp, "%d\t", i);
+        for (int j = 0; j < 19; j ++) {
+            fprintf(fp, "%d\t%llu\t", selectedFrameInds[i][j], timeStamps[i][j]);
+        }
+        fprintf(fp, "\n");
+    }
+    fclose(fp);
+    return 0;
+}
+
 int main(int argc, char* argv[]) {
     char* dir = argv[1];
     std::vector<std::vector<uint64_t>> timeStamps;
     std::vector<std::vector<int>> selectedFrameInds;
     readTimeStamps(dir, timeStamps);
     extractSyncFrames(timeStamps, selectedFrameInds);
+    saveSyncFiles(argv[2], timeStamps, selectedFrameInds);
     return 0;
 }
