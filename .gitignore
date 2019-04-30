@@ -32,5 +32,4 @@
 *.app
 
 data/
-build/
 .vscode/

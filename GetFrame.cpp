@@ -139,8 +139,8 @@ int main(int argc, char* argv[]){
     frameCB.f = mcamFrameCallback;
 
     //Set output file handles
-    char fileName[20] = {0};
-    char fileNameConfig[20] = {0};
+    char fileName[256] = {0};
+    char fileNameConfig[256] = {0};
     vOutFiles.resize(numMCams * 2); 
 
     for (int i = 0; i < numMCams; i++){
